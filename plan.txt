@@ -87,3 +87,9 @@ sidenote**
 - give the students the right bloodtypes
 
 /*------- displayList() -------*/
+- remove the list
+- put each student into the array with (displayStudent)
+- return
+
+/*------- displayStudent(student) -------*/
+- clone the textcontent of each datafield
