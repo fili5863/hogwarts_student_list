@@ -1,0 +1,89 @@
+- Add eventlistener to DOMcontentLoaded to start()
+
+/*------- text -------*/
+
+
+
+
+/*------- start -------*/
+- load "loadJSON"
+
+/*------- loadJSON -------*/
+- fetch the data from student.json
+- run prepObject(jsonData)
+-
+-
+-
+- run displayList()
+
+/*------- prepObject(jsonData) -------*/
+- make a forEach with the const Student as an object and put in:
+---
+firstName,
+lastName,
+middleName,
+nickName,
+image,
+house,
+blood,
+expelled,
+prefect,
+inquisitorial.
+---
+
+- make const student so that it creates an object from the const "Student"
+
+- run the functions 
+capFirstName()
+capmiddleName()
+capLastName()
+nickName()
+houseName()
+studentPicture()
+studentBlood()
+
+-after running all the functions for the info on students, run displayList
+
+/*------- capFirstName(jsonObject) -------*/
+- trim the names
+- remove middlename, lastname etc.
+- capitalize the first letter and return
+
+sidenote**
+
+- make sure Leanne just uses fullnamestring
+
+/*------- capMiddleName(jsonObject) -------*/
+- trim around the middlename
+- remove firstname and lastname
+- capitalize the first letter
+- capitalize the first letter if middlename contains "two" middlenames with hyphen
+- make sure if the student has a nickname, it does not get mixed up
+- return
+
+/*------- capLastName(jsonObject) -------*/
+- once again, we trim
+- remove firstname and middlename
+- capitalize "both" lastnames if hyphen is present
+- return
+
+/*------- nickName(jsonObject) -------*/
+- find the nickname with quotationmarks sorrounding it
+- remove the quotationmarks
+- capitalize the nickname
+- return
+
+/*------- studentPicture(jsonObject) -------*/
+- create a new image object
+- change the studentnames, so that it matches the image filenames
+- make sure the image source is equal to student.image
+
+/*------- houseName(jsonObject) -------*/
+- trim the housenames
+- capitalize the first letters of the housenames
+
+/*------- studentBlood(jsonObject) -------*/
+- fetch the blood info from the bloodJSON
+- give the students the right bloodtypes
+
+/*------- displayList() -------*/
