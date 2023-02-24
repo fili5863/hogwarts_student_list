@@ -93,3 +93,27 @@ sidenote**
 
 /*------- displayStudent(student) -------*/
 - clone the textcontent of each datafield
+
+
+/*------- sortFilter-------*/
+
+filter:
+- Try hardcode filter Gryffindor
+- Try hardcode filter Hufflepuff
+- Try hardcode filter Ravenclaw
+- Try hardcode filter Slytherin
+- Add user interactivity  
+- Add “all” filter 
+- Add some cleanup
+
+Sorting:
+- Try hardcode - by  first name
+- Try hardcode - by last name
+- Try hardcode - by prefect
+- Try hardcode - squad 
+- Try hardcode - expelled
+- Add user interactivity  
+- Changes sort direction
+- Add some cleanup 
+
+Combining filter and sorting 
