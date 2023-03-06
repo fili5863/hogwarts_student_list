@@ -79,9 +79,12 @@ function getLastName(student) {
   let studentLastname = student.fullName.substring(student.fullName.lastIndexOf(" ") + 1);
 
   if (studentLastname.includes("-")) {
-    return `${studentLastname.substring(
-      studentLastname.substring(0, studentLastname.lastIndexOf("-") + 1)
-    )}`;
+    return `${
+      studentLastname.charAt(0).toUpperCase() +
+      studentLastname.slice(1, studentLastname.indexOf("-") + 1).toLowerCase() +
+      studentLastname.charAt(studentLastname.indexOf("-") + 1).toUpperCase() +
+      studentLastname.slice(studentLastname.indexOf("-") + 2).toLowerCase()
+    }`;
   } else {
     return `${studentLastname.charAt(0).toUpperCase() + studentLastname.slice(1).toLowerCase()}`;
   }
