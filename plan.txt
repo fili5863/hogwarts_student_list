@@ -5,6 +5,15 @@
 
 
 
+
+
+/*------- Design idé -------*/
+Lave designet som en bog eller et scroll
+Lave designet som en gammel computer siden det skal være 90'er inspireret
+
+
+
+
 /*------- start -------*/
 - load "loadJSON"
 
