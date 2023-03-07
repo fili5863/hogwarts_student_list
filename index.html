@@ -8,26 +8,51 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <section id="popup">
-      <article>
-        <img src="" alt="" class="picture" />
-        <h3 class="name"></h3>
-        <p class="blood"></p>
-        <p class="expelled"></p>
-        <p class="prefect"></p>
-        <p class="inquis"></p>
-      </article>
-    </section>
-    <h1>Students</h1>
-    <template id="student">
-      <tr>
-        <td data-field="firstName">FIRSTNAME</td>
-        <td data-field="middleName">MIDDLENAME</td>
-        <td data-field="lastName">LASTNAME</td>
-        <td data-field="nickName">NICKNAME</td>
-        <td data-field="house">HOUSE</td>
-      </tr>
-    </template>
+    <main>
+      <section id="popup">
+        <article>
+          <img src="" alt="" class="picture" />
+          <h3 class="name"></h3>
+          <p class="blood"></p>
+          <p class="expelled"></p>
+          <p class="prefect"></p>
+          <p class="inquis"></p>
+        </article>
+      </section>
+      <h1>Students</h1>
+      <section class="allbuttons">
+        <div>
+          <button id="filter" class="btndropdown"></button>
+          <div class="dropFilter" id="dropFilter">
+            <p data-action="filter" data-filter="All houses">All houses</p>
+            <p data-action="filter" data-filter="Slytherin">Slytherin</p>
+            <p data-action="filter" data-filter="Hufflepuff">Hufflepuff</p>
+            <p data-action="filter" data-filter="Ravenclaw">Ravenclaw</p>
+            <p data-action="filter" data-filter="Gryffindor">Gryffindor</p>
+          </div>
+        </div>
+        <div>
+          <button id="sort" class="btndropdown"></button>
+          <div class="dropSort" id="dropSort">
+            <p data-action="sort" data-sort="firstname">Firstname</p>
+            <p data-action="sort" data-sort="lastname">Lastname</p>
+            <p data-action="sort" data-sort="house">House</p>
+          </div>
+        </div>
+      </section>
+      <table id="list">
+        <tbody></tbody>
+      </table>
+      <template id="student">
+        <tr>
+          <td data-field="firstName">FIRSTNAME</td>
+          <td data-field="middleName">MIDDLENAME</td>
+          <td data-field="lastName">LASTNAME</td>
+          <td data-field="nickName">NICKNAME</td>
+          <td data-field="house">HOUSE</td>
+        </tr>
+      </template>
+    </main>
     <script src="script.js"></script>
   </body>
 </html>

@@ -23,6 +23,23 @@ window.addEventListener("DOMContentLoaded", start());
 /* Data fetch */
 function start() {
   fetchData();
+  registerButtons();
+}
+
+function registerButtons() {
+  document
+    .querySelectorAll("[data-action='filter']")
+    .forEach(option => option.addEventListener("click", selectFilter));
+  document
+    .querySelectorAll("[data-action='sort']")
+    .forEach(option => option.addEventListener("click", selectSort));
+}
+
+function selectSort() {
+  console.log("sort");
+}
+function selectFilter() {
+  console.log("filter");
 }
 
 async function fetchData() {
@@ -175,4 +192,22 @@ function getImage(newStudent, student) {
   }
 }
 
-function displayList() {}
+function displayList() {
+  document.querySelector("#list tbody").innerHTML = "";
+  allStudents.forEach(displayStudent);
+}
+
+function displayStudent(student) {
+  // laver en klon af den nye liste via templaten
+  const clone = document.querySelector("template#student").content.cloneNode(true);
+
+  // bestemmer hvad der skal vises
+  clone.querySelector("[data-field=firstName]").textContent = student.firstName;
+  clone.querySelector("[data-field=middleName]").textContent = student.middleName;
+  clone.querySelector("[data-field=lastName]").textContent = student.lastName;
+  clone.querySelector("[data-field=nickName]").textContent = student.nickName;
+  clone.querySelector("[data-field=house]").textContent = student.house;
+
+  // append clone to list
+  document.querySelector("#list tbody").appendChild(clone);
+}
