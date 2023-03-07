@@ -23,17 +23,27 @@ function start() {
 }
 
 async function fetchData() {
-  let [studentData, bloodData] = await Promise.all([fetch("https://petlatkea.dk/2021/hogwarts/students.json").then((response) => response.json()), fetch("https://petlatkea.dk/2021/hogwarts/families.json").then((response) => response.json())]);
+  let [studentData, bloodData] = await Promise.all([
+    fetch("https://petlatkea.dk/2021/hogwarts/students.json").then(response => response.json()),
+    fetch("https://petlatkea.dk/2021/hogwarts/families.json").then(response => response.json()),
+  ]);
   prepareObject(studentData, bloodData);
   console.log(allStudents);
+  displayList();
 }
 
 /* Prepare list of students */
 
 function prepareObject(students, bloodData) {
-  students.forEach((student) => {
+  students.forEach(student => {
     const newStudent = Object.create(Student);
     cleanStudentNames(newStudent, student);
+    cleanStudentHouse(newStudent, student);
+    cleanStudentImage(newStudent, student);
+    cleanStudentBlood(newStudent, student, bloodData);
+
+    //    Pushes the studentlist into the array
+    allStudents.push(newStudent);
   });
 }
 function cleanStudentNames(newStudent, student) {
@@ -44,21 +54,39 @@ function cleanStudentNames(newStudent, student) {
   newStudent.firstName = getFirstName(student);
   newStudent.middleName = getMiddleName(student);
   newStudent.lastName = getLastName(student);
-  newStudent.houseName = getHouseName(student);
   newStudent.nickName = getNickName(student);
-  newStudent.image = getImage(student);
+}
 
-  //    Pushes the studentlist into the array
-  allStudents.push(newStudent);
+function cleanStudentHouse(newStudent, student) {
+  newStudent.houseName = getHouseName(student);
+}
+function cleanStudentImage(newStudent, student) {
+  newStudent.image = getImage(newStudent, student);
+}
 
-  // console.log(newStudent.firstName, newStudent.middleName, newStudent.lastName);
-  // console.log(newStudent.houseName);
-  // console.log(newStudent.nickName);
+function cleanStudentBlood(newStudent, student, bloodData) {
+  newStudent.blood = getBlood(newStudent, student, bloodData);
+}
+
+function getBlood(newStudent, student, bloodData) {
+  let studentBlood = newStudent.lastName;
+  if (
+    bloodData.pure.includes(newStudent.lastName) &&
+    bloodData.half.includes(newStudent.lastName)
+  ) {
+    return "pure";
+  } else if (bloodData.half.includes(newStudent.lastName)) {
+    return "half";
+  } else {
+    return "muggle";
+  }
 }
 
 function getFirstName(student) {
   if (student.fullName === "Leanne") {
-    return `${student.fullName.charAt(0).toUpperCase() + student.fullName.slice(1).toLowerCase().trim()}`;
+    return `${
+      student.fullName.charAt(0).toUpperCase() + student.fullName.slice(1).toLowerCase().trim()
+    }`;
   }
   // Finds the firstname
   let studentFirstname = student.fullName.substring(0, student.fullName.indexOf(" "));
@@ -67,7 +95,9 @@ function getFirstName(student) {
 }
 
 function getMiddleName(student) {
-  let studentMiddlename = student.fullName.substring(student.fullName.indexOf(" "), student.fullName.lastIndexOf(" ")).trim();
+  let studentMiddlename = student.fullName
+    .substring(student.fullName.indexOf(" "), student.fullName.lastIndexOf(" "))
+    .trim();
 
   // If the student doesn't have middlename, return blank
   if (studentMiddlename === "" || studentMiddlename === student.firstName) {
@@ -83,7 +113,12 @@ function getLastName(student) {
   let studentLastname = student.fullName.substring(student.fullName.lastIndexOf(" ") + 1);
 
   if (studentLastname.includes("-")) {
-    return `${studentLastname.charAt(0).toUpperCase() + studentLastname.slice(1, studentLastname.indexOf("-") + 1).toLowerCase() + studentLastname.charAt(studentLastname.indexOf("-") + 1).toUpperCase() + studentLastname.slice(studentLastname.indexOf("-") + 2).toLowerCase()}`;
+    return `${
+      studentLastname.charAt(0).toUpperCase() +
+      studentLastname.slice(1, studentLastname.indexOf("-") + 1).toLowerCase() +
+      studentLastname.charAt(studentLastname.indexOf("-") + 1).toUpperCase() +
+      studentLastname.slice(studentLastname.indexOf("-") + 2).toLowerCase()
+    }`;
   } else if (student.fullName == "Leanne") {
     return `${(studentLastname = "")}`;
   } else {
@@ -98,42 +133,57 @@ function getHouseName(student) {
 }
 
 function getNickName(student) {
-  let studentNickname = student.fullName.substring(student.fullName.indexOf(`"`), student.fullName.lastIndexOf(`"`) + 1);
+  let studentNickname = student.fullName.substring(
+    student.fullName.indexOf(`"`),
+    student.fullName.lastIndexOf(`"`) + 1
+  );
   // Removes the quotationmarks
   student.nickName = studentNickname.replaceAll(`"`, ``);
 
   return student.nickName;
 }
 
-function getImage(student) {
+function getImage(newStudent, student) {
   let imageSrc = new Image(100, 100);
 
-  let imageLastname = student.fullName
-    .substring(student.fullName.lastIndexOf(" ") + 1)
-    .toLowerCase();
-  let imageFirstname = student.fullName.charAt(0).toLowerCase();
-
-  imageSrc.src = "images/" + imageLastname;
+  let imageLastname = newStudent.lastName.toLowerCase();
+  let imageFirstname = newStudent.firstName.charAt(0).toLowerCase();
 
   student.image = imageSrc;
 
-  if (student.fullName.includes("Leanne")) {
+  if (newStudent.firstName === "Leanne") {
     return `${(imageSrc.src = "")}`;
   } else if (imageLastname.includes("patil")) {
     return `${(imageSrc.src =
-      "images/" +
-      imageLastname +
-      "_" +
-      student.fullName.substring(0, student.fullName.indexOf(" ")).toLowerCase() +
-      ".png")}`;
+      "images/" + imageLastname + "_" + newStudent.firstName.toLowerCase() + ".png")}`;
   } else if (imageLastname.includes("-")) {
     return `${(imageSrc.src =
       "images/" +
-      student.fullName.substring(student.fullName.indexOf("-") + 1).toLowerCase() +
+      imageLastname.substring(imageLastname.indexOf("-") + 1) +
       "_" +
       imageFirstname +
       ".png")}`;
   } else {
     return `${(imageSrc.src = "images/" + imageLastname + "_" + imageFirstname + ".png")}`;
   }
+
+  // if (student.fullName.includes("Leanne")) {
+  //   return `${(imageSrc.src = "")}`;
+  // } else if (imageLastname.includes("patil")) {
+  //   return `${(imageSrc.src =
+  //     "images/" +
+  //     imageLastname +
+  //     "_" +
+  //     student.fullName.substring(0, student.fullName.indexOf(" ")).toLowerCase() +
+  //     ".png")}`;
+  // } else if (imageLastname.includes("-")) {
+  //   return `${(imageSrc.src =
+  //     "images/" +
+  //     student.fullName.substring(student.fullName.indexOf("-") + 1).toLowerCase() +
+  //     "_" +
+  //     imageFirstname +
+  //     ".png")}`;
+  // } else {
+  //   return `${(imageSrc.src = "images/" + imageLastname + "_" + imageFirstname + ".png")}`;
+  // }
 }
