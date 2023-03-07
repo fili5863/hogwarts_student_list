@@ -23,10 +23,7 @@ function start() {
 }
 
 async function fetchData() {
-  let [studentData, bloodData] = await Promise.all([
-    fetch("https://petlatkea.dk/2021/hogwarts/students.json").then(response => response.json()),
-    fetch("https://petlatkea.dk/2021/hogwarts/families.json").then(response => response.json()),
-  ]);
+  let [studentData, bloodData] = await Promise.all([fetch("https://petlatkea.dk/2021/hogwarts/students.json").then((response) => response.json()), fetch("https://petlatkea.dk/2021/hogwarts/families.json").then((response) => response.json())]);
   prepareObject(studentData, bloodData);
   console.log(allStudents);
 }
@@ -34,7 +31,7 @@ async function fetchData() {
 /* Prepare list of students */
 
 function prepareObject(students, bloodData) {
-  students.forEach(student => {
+  students.forEach((student) => {
     const newStudent = Object.create(Student);
     cleanStudentNames(newStudent, student);
   });
@@ -61,9 +58,7 @@ function cleanStudentNames(newStudent, student) {
 
 function getFirstName(student) {
   if (student.fullName === "Leanne") {
-    return `${
-      student.fullName.charAt(0).toUpperCase() + student.fullName.slice(1).toLowerCase().trim()
-    }`;
+    return `${student.fullName.charAt(0).toUpperCase() + student.fullName.slice(1).toLowerCase().trim()}`;
   }
   // Finds the firstname
   let studentFirstname = student.fullName.substring(0, student.fullName.indexOf(" "));
@@ -72,9 +67,7 @@ function getFirstName(student) {
 }
 
 function getMiddleName(student) {
-  let studentMiddlename = student.fullName
-    .substring(student.fullName.indexOf(" "), student.fullName.lastIndexOf(" "))
-    .trim();
+  let studentMiddlename = student.fullName.substring(student.fullName.indexOf(" "), student.fullName.lastIndexOf(" ")).trim();
 
   // If the student doesn't have middlename, return blank
   if (studentMiddlename === "" || studentMiddlename === student.firstName) {
@@ -90,12 +83,7 @@ function getLastName(student) {
   let studentLastname = student.fullName.substring(student.fullName.lastIndexOf(" ") + 1);
 
   if (studentLastname.includes("-")) {
-    return `${
-      studentLastname.charAt(0).toUpperCase() +
-      studentLastname.slice(1, studentLastname.indexOf("-") + 1).toLowerCase() +
-      studentLastname.charAt(studentLastname.indexOf("-") + 1).toUpperCase() +
-      studentLastname.slice(studentLastname.indexOf("-") + 2).toLowerCase()
-    }`;
+    return `${studentLastname.charAt(0).toUpperCase() + studentLastname.slice(1, studentLastname.indexOf("-") + 1).toLowerCase() + studentLastname.charAt(studentLastname.indexOf("-") + 1).toUpperCase() + studentLastname.slice(studentLastname.indexOf("-") + 2).toLowerCase()}`;
   } else if (student.fullName == "Leanne") {
     return `${(studentLastname = "")}`;
   } else {
@@ -106,15 +94,11 @@ function getLastName(student) {
 function getHouseName(student) {
   let houseName = student.house.trim();
   student.house = houseName.charAt(0).toUpperCase() + houseName.slice(1).toLowerCase();
-  // return `${houseName.charAt(0).toUpperCase() + houseName.slice(1).toLowerCase()}`;
   return student.house;
 }
 
 function getNickName(student) {
-  let studentNickname = student.fullName.substring(
-    student.fullName.indexOf(`"`),
-    student.fullName.lastIndexOf(`"`) + 1
-  );
+  let studentNickname = student.fullName.substring(student.fullName.indexOf(`"`), student.fullName.lastIndexOf(`"`) + 1);
   // Removes the quotationmarks
   student.nickName = studentNickname.replaceAll(`"`, ``);
 
