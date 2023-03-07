@@ -131,3 +131,8 @@ Sorting:
 - Add some cleanup 
 
 Combining filter and sorting 
+
+hacking:
+- give an alert that the system is hacked
+- have an object with your own details
+- push the object into the array when clicking on the hack button
