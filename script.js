@@ -42,7 +42,7 @@ function cleanStudentNames(newStudent, student) {
   newStudent.middleName = getMiddleName(student);
   newStudent.lastName = getLastName(student);
   newStudent.houseName = getHouseName(student);
-  // newStudent.houseName = getNickName(student);
+  newStudent.houseName = getNickName(student);
 
   //   nickName(student);
   console.log(newStudent.firstName, newStudent.middleName, newStudent.lastName);
@@ -90,11 +90,13 @@ function getHouseName(student) {
   return student.house;
 }
 
-// function getNickName(student) {
-//   if (!student.nickName) {
-//     return;
-//   }
-//   let studentNickname = student.nickName.substring(student.indexOf(`"`), student.nickName.lastIndexOf(`"`) + 1);
-//   // Removes the quotationmarks
-//   student.nickName = studentNickname.replaceAll(`"`, ``);
-// } //lortet virker ikke
+function getNickName(student) {
+  // if (!student.nickName) {
+  //   return;
+  // }
+  let studentNickname = student.fullName.substring(student.fullName.indexOf(`"`), student.fullName.lastIndexOf(`"`) + 1);
+  // Removes the quotationmarks
+  student.nickName = studentNickname.replaceAll(`"`, ``);
+
+  return student.nickName;
+} //lortet virker ikke
