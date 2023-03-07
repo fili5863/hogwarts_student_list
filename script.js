@@ -6,9 +6,8 @@ const Student = {
   firstName: "",
   lastName: "",
   middleName: "",
-  nickName: "",
+  nickName: "Null",
   image: "",
-  house: "",
   gender: "",
   bloodstatus: "",
   house: "",
@@ -43,14 +42,15 @@ function cleanStudentNames(newStudent, student) {
   newStudent.middleName = getMiddleName(student);
   newStudent.lastName = getLastName(student);
   newStudent.houseName = getHouseName(student);
+  // newStudent.houseName = getNickName(student);
 
-  //   houseName(student);
   //   nickName(student);
   console.log(newStudent.firstName, newStudent.middleName, newStudent.lastName);
   console.log(newStudent.firstName);
   console.log(newStudent.middleName);
   console.log(newStudent.lastName);
   console.log(newStudent.houseName);
+  console.log(newStudent.nickName);
 }
 
 function getFirstName(student) {
@@ -85,9 +85,16 @@ function getLastName(student) {
 
 function getHouseName(student) {
   let houseName = student.house.trim();
-
   student.house = houseName.charAt(0).toUpperCase() + houseName.slice(1).toLowerCase();
-
   // return `${houseName.charAt(0).toUpperCase() + houseName.slice(1).toLowerCase()}`;
   return student.house;
 }
+
+// function getNickName(student) {
+//   if (!student.nickName) {
+//     return;
+//   }
+//   let studentNickname = student.nickName.substring(student.indexOf(`"`), student.nickName.lastIndexOf(`"`) + 1);
+//   // Removes the quotationmarks
+//   student.nickName = studentNickname.replaceAll(`"`, ``);
+// } //lortet virker ikke
