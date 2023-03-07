@@ -124,24 +124,32 @@ function getNickName(student) {
 function getImage(student) {
   let imageSrc = new Image(100, 100);
 
-  let imageLastname = student.fullName.substring(student.fullName.indexOf(" ") + 1).toLowerCase();
+  let imageLastname = student.fullName
+    .substring(student.fullName.lastIndexOf(" ") + 1)
+    .toLowerCase();
   let imageFirstname = student.fullName.charAt(0).toLowerCase();
 
-  imageSrc.src = "images/" + imageLastname
+  imageSrc.src = "images/" + imageLastname;
 
   student.image = imageSrc;
 
-  if (student.firstName === "Leanne") {
+  if (student.fullName.includes("Leanne")) {
     return `${(imageSrc.src = "")}`;
   } else if (imageLastname.includes("patil")) {
     return `${(imageSrc.src =
+      "images/" +
       imageLastname +
       "_" +
-      student.fullName.substring(0, student.fullName.indexOf(" ")).toLowerCase())}`;
-  } else if (imageLastname.contains("-")) {
-    return `${imageSrc.src = }`
-
+      student.fullName.substring(0, student.fullName.indexOf(" ")).toLowerCase() +
+      ".png")}`;
+  } else if (imageLastname.includes("-")) {
+    return `${(imageSrc.src =
+      "images/" +
+      student.fullName.substring(student.fullName.indexOf("-") + 1).toLowerCase() +
+      "_" +
+      imageFirstname +
+      ".png")}`;
   } else {
-    return `${(imageSrc.src = imageLastname + "_" + imageFirstname)}`;
+    return `${(imageSrc.src = "images/" + imageLastname + "_" + imageFirstname + ".png")}`;
   }
 }
