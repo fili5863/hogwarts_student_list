@@ -21,17 +21,14 @@ function start() {
 }
 
 async function fetchData() {
-  let [studentData, bloodData] = await Promise.all([
-    fetch("https://petlatkea.dk/2021/hogwarts/students.json").then(response => response.json()),
-    fetch("https://petlatkea.dk/2021/hogwarts/families.json").then(response => response.json()),
-  ]);
+  let [studentData, bloodData] = await Promise.all([fetch("https://petlatkea.dk/2021/hogwarts/students.json").then((response) => response.json()), fetch("https://petlatkea.dk/2021/hogwarts/families.json").then((response) => response.json())]);
   prepareObject(studentData, bloodData);
 }
 
 /* Prepare list of students */
 
 function prepareObject(students, bloodData) {
-  students.forEach(student => {
+  students.forEach((student) => {
     const newStudent = Object.create(Student);
     cleanStudentNames(newStudent, student);
   });
@@ -45,7 +42,7 @@ function cleanStudentNames(newStudent, student) {
   newStudent.middleName = getMiddleName(student);
   newStudent.lastName = getLastName(student);
   newStudent.houseName = getHouseName(student);
-  newStudent.houseName = getNickName(student);
+  newStudent.nickName = getNickName(student);
 
   //   nickName(student);
   console.log(newStudent.firstName, newStudent.middleName, newStudent.lastName);
@@ -61,9 +58,7 @@ function getFirstName(student) {
 }
 
 function getMiddleName(student) {
-  let studentMiddlename = student.fullName
-    .substring(student.fullName.indexOf(" "), student.fullName.lastIndexOf(" "))
-    .trim();
+  let studentMiddlename = student.fullName.substring(student.fullName.indexOf(" "), student.fullName.lastIndexOf(" ")).trim();
 
   // If the student doesn't have middlename, return blank
   if (studentMiddlename === "" || studentMiddlename === student.firstName) {
@@ -79,12 +74,7 @@ function getLastName(student) {
   let studentLastname = student.fullName.substring(student.fullName.lastIndexOf(" ") + 1);
 
   if (studentLastname.includes("-")) {
-    return `${
-      studentLastname.charAt(0).toUpperCase() +
-      studentLastname.slice(1, studentLastname.indexOf("-") + 1).toLowerCase() +
-      studentLastname.charAt(studentLastname.indexOf("-") + 1).toUpperCase() +
-      studentLastname.slice(studentLastname.indexOf("-") + 2).toLowerCase()
-    }`;
+    return `${studentLastname.charAt(0).toUpperCase() + studentLastname.slice(1, studentLastname.indexOf("-") + 1).toLowerCase() + studentLastname.charAt(studentLastname.indexOf("-") + 1).toUpperCase() + studentLastname.slice(studentLastname.indexOf("-") + 2).toLowerCase()}`;
   } else {
     return `${studentLastname.charAt(0).toUpperCase() + studentLastname.slice(1).toLowerCase()}`;
   }
@@ -98,12 +88,9 @@ function getHouseName(student) {
 }
 
 function getNickName(student) {
-  // if (!student.nickName) {
-  //   return;
-  // }
   let studentNickname = student.fullName.substring(student.fullName.indexOf(`"`), student.fullName.lastIndexOf(`"`) + 1);
   // Removes the quotationmarks
   student.nickName = studentNickname.replaceAll(`"`, ``);
 
   return student.nickName;
-} //lortet virker ikke
+}
