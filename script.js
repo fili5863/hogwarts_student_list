@@ -49,6 +49,7 @@ function cleanStudentNames(newStudent, student) {
   newStudent.lastName = getLastName(student);
   newStudent.houseName = getHouseName(student);
   newStudent.nickName = getNickName(student);
+  newStudent.image = getImage(student);
 
   //    Pushes the studentlist into the array
   allStudents.push(newStudent);
@@ -118,4 +119,29 @@ function getNickName(student) {
   student.nickName = studentNickname.replaceAll(`"`, ``);
 
   return student.nickName;
+}
+
+function getImage(student) {
+  let imageSrc = new Image(100, 100);
+
+  let imageLastname = student.fullName.substring(student.fullName.indexOf(" ") + 1).toLowerCase();
+  let imageFirstname = student.fullName.charAt(0).toLowerCase();
+
+  imageSrc.src = "images/" + imageLastname
+
+  student.image = imageSrc;
+
+  if (student.firstName === "Leanne") {
+    return `${(imageSrc.src = "")}`;
+  } else if (imageLastname.includes("patil")) {
+    return `${(imageSrc.src =
+      imageLastname +
+      "_" +
+      student.fullName.substring(0, student.fullName.indexOf(" ")).toLowerCase())}`;
+  } else if (imageLastname.contains("-")) {
+    return `${imageSrc.src = }`
+
+  } else {
+    return `${(imageSrc.src = imageLastname + "_" + imageFirstname)}`;
+  }
 }
