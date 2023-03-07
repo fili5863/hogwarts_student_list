@@ -13,6 +13,9 @@ const Student = {
   gender: "",
   bloodstatus: "",
   house: "",
+  expelled: false,
+  prefect: false,
+  inquis: false,
 };
 
 window.addEventListener("DOMContentLoaded", start());
@@ -28,8 +31,8 @@ async function fetchData() {
     fetch("https://petlatkea.dk/2021/hogwarts/families.json").then(response => response.json()),
   ]);
   prepareObject(studentData, bloodData);
-  console.log(allStudents);
   displayList();
+  console.log(allStudents);
 }
 
 /* Prepare list of students */
@@ -69,7 +72,6 @@ function cleanStudentBlood(newStudent, student, bloodData) {
 }
 
 function getBlood(newStudent, student, bloodData) {
-  let studentBlood = newStudent.lastName;
   if (
     bloodData.pure.includes(newStudent.lastName) &&
     bloodData.half.includes(newStudent.lastName)
@@ -145,18 +147,23 @@ function getNickName(student) {
 
 function getImage(newStudent, student) {
   let imageSrc = new Image(100, 100);
-
+  // Makes the lastname lowercase
   let imageLastname = newStudent.lastName.toLowerCase();
+  // Take the first letter of the firstname and makes it lowercase
   let imageFirstname = newStudent.firstName.charAt(0).toLowerCase();
 
   student.image = imageSrc;
-
+  // If the student is Leanne
   if (newStudent.firstName === "Leanne") {
     return `${(imageSrc.src = "")}`;
-  } else if (imageLastname.includes("patil")) {
+  }
+  // If the students have the same lastname
+  else if (imageLastname.includes("patil")) {
     return `${(imageSrc.src =
       "images/" + imageLastname + "_" + newStudent.firstName.toLowerCase() + ".png")}`;
-  } else if (imageLastname.includes("-")) {
+  }
+  // If the student has a hyphen in the lastname
+  else if (imageLastname.includes("-")) {
     return `${(imageSrc.src =
       "images/" +
       imageLastname.substring(imageLastname.indexOf("-") + 1) +
@@ -166,24 +173,6 @@ function getImage(newStudent, student) {
   } else {
     return `${(imageSrc.src = "images/" + imageLastname + "_" + imageFirstname + ".png")}`;
   }
-
-  // if (student.fullName.includes("Leanne")) {
-  //   return `${(imageSrc.src = "")}`;
-  // } else if (imageLastname.includes("patil")) {
-  //   return `${(imageSrc.src =
-  //     "images/" +
-  //     imageLastname +
-  //     "_" +
-  //     student.fullName.substring(0, student.fullName.indexOf(" ")).toLowerCase() +
-  //     ".png")}`;
-  // } else if (imageLastname.includes("-")) {
-  //   return `${(imageSrc.src =
-  //     "images/" +
-  //     student.fullName.substring(student.fullName.indexOf("-") + 1).toLowerCase() +
-  //     "_" +
-  //     imageFirstname +
-  //     ".png")}`;
-  // } else {
-  //   return `${(imageSrc.src = "images/" + imageLastname + "_" + imageFirstname + ".png")}`;
-  // }
 }
+
+function displayList() {}
