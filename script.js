@@ -27,9 +27,20 @@ function start() {
 }
 
 function registerButtons() {
-  document
-    .querySelectorAll(".btndropdown")
-    .forEach(button => button.addEventListener("click", buttonClick));
+  document.querySelectorAll(".btn").forEach(button =>
+    button.addEventListener("click", e => {
+      console.log(e.target.id);
+      if (e.target.id === "filter") {
+        document.getElementById("dropFilter").classList.toggle("hidden");
+      } else if (e.target.id === "sort") {
+        document.getElementById("dropSort").classList.toggle("hidden");
+      }
+
+      // document
+      //   .querySelectorAll(".dropdown")
+      //   .forEach(dropdown => dropdown.classList.toggle("hidden"));
+    })
+  );
   document
     .querySelectorAll("[data-action='filter']")
     .forEach(option => option.addEventListener("click", selectFilter));
@@ -38,13 +49,10 @@ function registerButtons() {
     .forEach(option => option.addEventListener("click", selectSort));
 }
 
-function buttonClick() {
-  this.classList.toggle("hidden");
-}
-
 function selectSort() {
   console.log("sort");
 }
+
 function selectFilter() {
   console.log("filter");
 }
@@ -207,14 +215,31 @@ function displayList() {
 function displayStudent(student) {
   // laver en klon af den nye liste via templaten
   const clone = document.querySelector("template#student").content.cloneNode(true);
-
+  clone
+    .querySelectorAll("tr")
+    .forEach(students => students.addEventListener("click", () => showStudent(student)));
   // bestemmer hvad der skal vises
   clone.querySelector("[data-field=firstName]").textContent = student.firstName;
   clone.querySelector("[data-field=middleName]").textContent = student.middleName;
   clone.querySelector("[data-field=lastName]").textContent = student.lastName;
   clone.querySelector("[data-field=nickName]").textContent = student.nickName;
-  clone.querySelector("[data-field=house]").textContent = student.house;
+  clone.querySelector("[data-field=house]").textContent = student.houseName;
 
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
+}
+
+function showStudent(student) {
+  const modal = document.querySelector(".modal");
+
+  if (student.nickName === "") {
+    modal.querySelector(
+      ".name"
+    ).textContent = `${student.firstName} ${student.middleName} ${student.lastName}`;
+  } else {
+    modal.querySelector(
+      ".name"
+    ).textContent = `${student.firstName} ${student.middleName} "${student.nickName}" ${student.lastName}`;
+  }
+  modal.classList.remove("hidden");
 }

@@ -4,25 +4,34 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://use.typekit.net/ckj3wfz.css" />
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main>
-      <section id="popup">
+      <section id="popup" class="modal hidden">
+        <div class="topbar">
+          <div>
+            <div class="popIcon">O</div>
+            <span>Student List</span>
+          </div>
+          <button id="popBtn" class="popBtn">X</button>
+        </div>
         <article>
           <img src="" alt="" class="picture" />
           <h3 class="name"></h3>
+          <h4 class="nickname"></h4>
           <p class="blood"></p>
           <p class="expelled"></p>
-          <p class="prefect"></p>
+          <p class="prefectPop"></p>
           <p class="inquis"></p>
         </article>
       </section>
       <h1>Students</h1>
       <section class="allbuttons">
         <div>
-          <button id="filter" class="btndropdown"><span>Filtering</span></button>
+          <button id="filter" class="btn">Filtering</button>
           <div class="dropdown hidden" id="dropFilter">
             <p data-action="filter" data-filter="All houses">All houses</p>
             <p data-action="filter" data-filter="Slytherin">Slytherin</p>
@@ -32,12 +41,18 @@
           </div>
         </div>
         <div>
-          <button id="sort" class="btndropdown"><span>Sorting</span></button>
+          <button id="sort" class="btn">Sorting</button>
           <div class="dropdown hidden" id="dropSort">
             <p data-action="sort" data-sort="firstname">Firstname</p>
             <p data-action="sort" data-sort="lastname">Lastname</p>
             <p data-action="sort" data-sort="house">House</p>
           </div>
+        </div>
+        <div>
+          <button class="btn" id="prefect">Prefect</button>
+        </div>
+        <div>
+          <button class="btn" id="expell">Expelled</button>
         </div>
       </section>
       <table id="list">
