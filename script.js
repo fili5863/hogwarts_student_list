@@ -303,6 +303,9 @@ function showStudent(student) {
   }
   modal.querySelector(".picture").src = student.image;
   modal.querySelector(".blood").textContent = "Bloodtype: " + student.blood;
+  modal.querySelector(".expelled").textContent = "Expelled: " + student.expelled;
+  modal.querySelector(".prefectPop").textContent = "Prefect: " + student.prefect;
+  modal.querySelector(".inquis").textContent = "Inquisitorial squad: " + student.inquis;
   modal.classList.remove("hidden");
   return;
 }
