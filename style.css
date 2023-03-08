@@ -14,23 +14,32 @@
 
 body {
   margin: 0 auto;
-  max-width: 1200px;
   background-color: var(--green);
+  overflow-y: hidden;
 }
-main {
+.window {
+  position: absolute;
+  z-index: 0;
+  background-color: var(--grey);
+  height: 600px;
+  width: 80vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-width: 1px;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  border-style: solid;
 }
 
 /* Buttons */
 .allbuttons {
   display: flex;
-  justify-content: space-evenly;
-}
-
-.allbuttons > div {
-  width: 170px;
+  gap: 3px;
+  margin-bottom: 20px;
 }
 
 .btn {
@@ -38,17 +47,15 @@ main {
   border: none;
   font-family: var(--win95);
   font-weight: var(--norm);
-  background-color: greenyellow;
-  padding: 15px 35px;
-  width: 100%;
+  background-color: var(--grey);
   text-align: center;
   text-decoration: none;
-
   font-size: 16px;
 }
 
 .dropdown {
   position: absolute;
+  z-index: 3;
   width: 170px;
   display: flex;
   flex-direction: column;
@@ -58,6 +65,21 @@ main {
 
 .dropdown p {
   padding-inline-start: 15px;
+}
+
+/* Content */
+.contentouter {
+  position: relative;
+  height: 100%;
+}
+.contentinner {
+  position: relative;
+  overflow-y: scroll;
+  height: 488px;
+  padding: 20px;
+  background-color: whitesmoke;
+  border-color: #808080 #ffffff #ffffff #808080;
+  border-style: inset;
 }
 
 /* List */
@@ -76,6 +98,7 @@ tbody {
 .modal {
   display: block;
   position: fixed;
+  z-index: 1;
   width: 40vw;
   height: 40vh;
   background-color: var(--grey);
@@ -83,14 +106,31 @@ tbody {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 2px;
-  border-width: 1px;
+  border-width: 2px;
   border-color: #ffffff #808080 #808080 #ffffff;
   border-style: solid;
+  outline: 1px solid var(--grey);
 }
 
 .modal > article {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  grid-auto-rows: 1fr auto;
   font-family: var(--win95);
   font-size: 15px;
+  padding: 15px;
+}
+
+.modal > article .picture {
+  grid-column: 1;
+  grid-row: span 2;
+}
+
+.modal > article h3,
+.modal > article p {
+  padding-left: 10px;
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .topbar {
@@ -119,12 +159,20 @@ tbody {
   font-size: 15px;
 }
 
-.popBtn {
-  place-self: end;
+.popBtn,
+.modalBtn > button,
+.windowBtn {
   background-color: var(--grey);
   margin: 3px;
   font-family: var(--win95);
   border-width: 1px;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  border-style: solid;
+}
+
+.modalBtn > button {
+  padding: 15px;
+  outline: 1px solid #000;
 }
 
 .hidden {

@@ -9,11 +9,10 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main>
+    <main class="window">
       <section id="popup" class="modal hidden">
         <div class="topbar">
           <div>
-            <div class="popIcon">O</div>
             <span>Student List</span>
           </div>
           <button id="popBtn" class="popBtn">X</button>
@@ -33,45 +32,57 @@
           <button id="expell">Expell</button>
         </div>
       </section>
-      <h1>Students</h1>
-      <section class="allbuttons">
-        <div>
-          <button id="filter" class="btn">Filtering</button>
-          <div class="dropdown hidden" id="dropFilter">
-            <p data-action="filter" data-filter="All houses">All houses</p>
-            <p data-action="filter" data-filter="Slytherin">Slytherin</p>
-            <p data-action="filter" data-filter="Hufflepuff">Hufflepuff</p>
-            <p data-action="filter" data-filter="Ravenclaw">Ravenclaw</p>
-            <p data-action="filter" data-filter="Gryffindor">Gryffindor</p>
+      <section class="contentouter">
+        <div class="topbar">
+          <div>
+            <div class="windowIcon">O</div>
+            <span>Student List</span>
           </div>
+          <button id="windowBtn" class="windowBtn">X</button>
         </div>
-        <div>
-          <button id="sort" class="btn">Sorting</button>
-          <div class="dropdown hidden" id="dropSort">
-            <p data-action="sort" data-sort="firstname">Firstname</p>
-            <p data-action="sort" data-sort="lastname">Lastname</p>
-            <p data-action="sort" data-sort="house">House</p>
+        <section class="allbuttons">
+          <div>
+            <button id="filter" class="btn">Filtering</button>
+            <div class="dropdown hidden" id="dropFilter">
+              <p data-action="filter" data-filter="All houses">All houses</p>
+              <p data-action="filter" data-filter="Slytherin">Slytherin</p>
+              <p data-action="filter" data-filter="Hufflepuff">Hufflepuff</p>
+              <p data-action="filter" data-filter="Ravenclaw">Ravenclaw</p>
+              <p data-action="filter" data-filter="Gryffindor">Gryffindor</p>
+            </div>
           </div>
-        </div>
-        <div>
-          <button class="btn" id="prefect">Prefect</button>
-        </div>
-        <div>
-          <button class="btn" id="expell">Expelled</button>
+          <div>
+            <button id="sort" class="btn">Sorting</button>
+            <div class="dropdown hidden" id="dropSort">
+              <p data-action="sort" data-sort="firstname">Firstname</p>
+              <p data-action="sort" data-sort="lastname">Lastname</p>
+              <p data-action="sort" data-sort="house">House</p>
+            </div>
+          </div>
+          <div>
+            <button class="btn" id="prefect">Prefect</button>
+          </div>
+          <div>
+            <button class="btn" id="expell">Expelled</button>
+          </div>
+        </section>
+        <div class="contentinner">
+          <h1>Students</h1>
+
+          <table id="list">
+            <tbody></tbody>
+          </table>
+          <template id="student">
+            <tr>
+              <td data-field="firstName">FIRSTNAME</td>
+              <td data-field="middleName">MIDDLENAME</td>
+              <td data-field="lastName">LASTNAME</td>
+              <td data-field="nickName">NICKNAME</td>
+              <td data-field="house">HOUSE</td>
+            </tr>
+          </template>
         </div>
       </section>
-      <table id="list">
-        <tbody></tbody>
-      </table>
-      <template id="student">
-        <tr>
-          <td data-field="firstName">FIRSTNAME</td>
-          <td data-field="middleName">MIDDLENAME</td>
-          <td data-field="lastName">LASTNAME</td>
-          <td data-field="nickName">NICKNAME</td>
-          <td data-field="house">HOUSE</td>
-        </tr>
-      </template>
     </main>
     <script src="script.js"></script>
   </body>
