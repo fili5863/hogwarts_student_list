@@ -22,3 +22,35 @@ tbody {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
+
+.allbuttons > div {
+  width: 170px;
+}
+
+.btndropdown {
+  border: none;
+  color: white;
+  background-color: greenyellow;
+  padding: 15px 35px;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+
+  font-size: 16px;
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  padding-inline-start: 15px;
+  color: antiquewhite;
+  background-color: green;
+}
+
+.hidden {
+  display: none;
+}
+
+span {
+  color: black;
+}

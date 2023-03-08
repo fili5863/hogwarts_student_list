@@ -28,11 +28,18 @@ function start() {
 
 function registerButtons() {
   document
+    .querySelectorAll(".btndropdown")
+    .forEach(button => button.addEventListener("click", buttonClick));
+  document
     .querySelectorAll("[data-action='filter']")
     .forEach(option => option.addEventListener("click", selectFilter));
   document
     .querySelectorAll("[data-action='sort']")
     .forEach(option => option.addEventListener("click", selectSort));
+}
+
+function buttonClick() {
+  this.classList.toggle("hidden");
 }
 
 function selectSort() {
