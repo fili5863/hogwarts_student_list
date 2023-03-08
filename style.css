@@ -1,7 +1,12 @@
 /* General */
+@font-face {
+  font-family: windows95;
+  src: url(font/W95FA/w95fa.woff2);
+}
+
 :root {
-  --loRes: "lores-12", sans-serif;
-  --norm: 400;
+  --win95: "windows95";
+  --norm: 100;
   --bold: 700;
   --grey: #b6b6b6;
   --green: #007a7a;
@@ -10,6 +15,7 @@
 body {
   margin: 0 auto;
   max-width: 1200px;
+  background-color: var(--green);
 }
 main {
   display: flex;
@@ -30,7 +36,7 @@ main {
 .btn {
   cursor: pointer;
   border: none;
-  font-family: var(--loRes);
+  font-family: var(--win95);
   font-weight: var(--norm);
   background-color: greenyellow;
   padding: 15px 35px;
@@ -76,20 +82,29 @@ tbody {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  padding: 2px;
+  border-width: 1px;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  border-style: solid;
+}
+
+.modal > article {
+  font-family: var(--win95);
+  font-size: 15px;
 }
 
 .topbar {
   display: flex;
   justify-content: space-between;
-  margin: 3px;
-  width: 99%;
+
+  width: 100%;
   background-color: darkblue;
 }
 
 .topbar > div {
   display: flex;
   gap: 3px;
-  font-family: var(--loRes);
+  font-family: var(--win95);
   font-weight: var(--bold);
   color: whitesmoke;
 }
@@ -101,13 +116,15 @@ tbody {
 .topbar span {
   color: whitesmoke;
   padding: 3px;
+  font-size: 15px;
 }
 
 .popBtn {
   place-self: end;
   background-color: var(--grey);
   margin: 3px;
-  font-family: var(--loRes);
+  font-family: var(--win95);
+  border-width: 1px;
 }
 
 .hidden {
