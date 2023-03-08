@@ -18,6 +18,12 @@ const Student = {
   inquis: false,
 };
 
+const settings = {
+  filter: "all",
+  sortBy: "name",
+  sortDir: "asc",
+};
+
 window.addEventListener("DOMContentLoaded", start());
 
 /* Data fetch */
@@ -74,6 +80,56 @@ function prepareObject(students, bloodData) {
     allStudents.push(newStudent);
   });
 }
+
+//filter
+
+function selectFilter(evt) {
+  const filter = evt.target.dataset.filter;
+  console.log("Filter clicked", evt.target.dataset.filter);
+  setFilter(filter);
+}
+
+function setFilter(filter) {
+  settings.filterBy = filter;
+  buildList();
+}
+
+function filterList(filteredList) {
+  if (settings.filterBy === "all_houses") {
+    filteredList = allHouses.filter(allHouses);
+  } else if (settings.filterBy === "slytherin") {
+    filteredList = slytherin.filter(slytherin);
+  } else if (settings.filterBy === "hufflepuff") {
+    filteredList = hufflepuff.filter(hufflepuff);
+  } else if (settings.filterBy === "ravenclaw") {
+    filteredList = ravenclaw.filter(ravenclaw);
+  } else {
+    filteredList = gryffindor.filter(gryffindor);
+
+    return filteredList;
+  }
+
+  function allHouses(student) {
+    return student.house === "all_houses";
+  }
+
+  function slytherin(student) {
+    return student.house === "slytherin";
+  }
+
+  function hufflepuff(student) {
+    return student.house === "hufflepuff";
+  }
+
+  function ravenclaw(student) {
+    return student.house === "ravenclaw";
+  }
+
+  function gryffindor(student) {
+    return student.house === "gryffindor";
+  }
+}
+
 function cleanStudentNames(newStudent, student) {
   // Get the fullname of the student and trims it
   student.fullName = student.fullname.trim();
@@ -184,6 +240,10 @@ function displayList() {
   allStudents.forEach(displayStudent);
 }
 
+function buildList() {
+  const currentList = filterList(allStudents);
+}
+
 function displayStudent(student) {
   // laver en klon af den nye liste via templaten
   const clone = document.querySelector("template#student").content.cloneNode(true);
@@ -210,8 +270,16 @@ function showStudent(student) {
   modal.querySelector(".picture").src = student.image;
   modal.querySelector(".blood").textContent = student.blood;
   modal.classList.remove("hidden");
+  return;
 }
 
 function closeModal() {
   document.querySelector(".modal").classList.add("hidden");
+}
+
+//expell
+document.getElementById("expell_modal").addEventListener("click", expellStudent);
+
+function expellStudent() {
+  console.log("expell");
 }
