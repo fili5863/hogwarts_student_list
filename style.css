@@ -9,6 +9,8 @@
   --norm: 100;
   --bold: 700;
   --grey: #b6b6b6;
+  --borderdark: #606060;
+  --borderlight: #ffffff;
   --green: #007a7a;
 }
 
@@ -16,7 +18,61 @@ body {
   margin: 0 auto;
   background-color: var(--green);
   overflow-y: hidden;
+  overflow-x: hidden;
 }
+
+.process {
+  display: flex;
+  position: absolute;
+  background-color: var(--grey);
+  width: calc(100% - 4px);
+  height: 30px;
+  top: calc(100% - 34px);
+  border-width: 2px;
+  border-color: var(--borderlight) var(--borderdark) var(--borderdark) var(--borderlight);
+  border-style: solid;
+}
+
+.start {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  background-color: var(--grey);
+  width: 60px;
+  height: 75%;
+  margin: 3px;
+  border-width: 3px;
+  border-color: var(--borderlight) var(--borderdark) var(--borderdark) var(--borderlight);
+  border-style: solid;
+}
+
+.window1 {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  background-color: var(--grey);
+  width: 125px;
+  height: 75%;
+  margin: 3px;
+  border-width: 3px;
+  border-color: var(--borderlight) var(--borderdark) var(--borderdark) var(--borderlight);
+  border-style: solid;
+}
+
+.process p {
+  grid-column: 2;
+  font-family: var(--win95);
+  font-weight: var(--bold);
+  text-align: end;
+  margin: 0;
+  padding-inline: 3px;
+  align-self: center;
+}
+
+.window1 > p {
+  grid-column: 1;
+  font-weight: var(--norm);
+  text-align: start;
+}
+
 .window {
   position: absolute;
   z-index: 0;
@@ -30,8 +86,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-width: 1px;
-  border-color: #ffffff #808080 #808080 #ffffff;
+  border-width: 2px;
+  border-color: var(--borderlight) var(--borderdark) var(--borderdark) var(--borderlight);
   border-style: solid;
 }
 
@@ -78,7 +134,7 @@ body {
   height: 488px;
   padding: 20px;
   background-color: whitesmoke;
-  border-color: #808080 #ffffff #ffffff #808080;
+  border-color: var(--borderdark) var(--borderlight) var(--borderlight) var(--borderdark);
   border-style: inset;
 }
 
@@ -108,7 +164,7 @@ tbody {
   transform: translate(-50%, -50%);
   padding: 2px;
   border-width: 2px;
-  border-color: #ffffff #808080 #808080 #ffffff;
+  border-color: var(--borderlight) var(--borderdark) var(--borderdark) var(--borderlight);
   border-style: solid;
   outline: 1px solid var(--grey);
 }
@@ -173,7 +229,7 @@ tbody {
   margin: 3px;
   font-family: var(--win95);
   border-width: 1px;
-  border-color: #ffffff #808080 #808080 #ffffff;
+  border-color: var(--borderlight) var(--borderdark) var(--borderdark) var(--borderlight);
   border-style: solid;
 }
 
