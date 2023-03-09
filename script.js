@@ -65,7 +65,7 @@ async function fetchData() {
     fetch("https://petlatkea.dk/2021/hogwarts/families.json").then(response => response.json()),
   ]);
   prepareObject(studentData, bloodData);
-  displayList();
+  buildList();
   console.log(allStudents);
 }
 
@@ -98,15 +98,13 @@ function setFilter(filter) {
 }
 
 function filterList(filteredList) {
-  if (settings.filterBy === "all") {
-    filteredList = allStudents.filter(allHouses);
-  } else if (settings.filterBy === "slytherin") {
+  if (settings.filterBy === "slytherin") {
     filteredList = allStudents.filter(slytherin);
   } else if (settings.filterBy === "hufflepuff") {
     filteredList = allStudents.filter(hufflepuff);
   } else if (settings.filterBy === "ravenclaw") {
     filteredList = allStudents.filter(ravenclaw);
-  } else {
+  } else if (settings.filterBy === "gryffindor") {
     filteredList = allStudents.filter(gryffindor);
   }
   return filteredList;
@@ -136,12 +134,46 @@ function gryffindor(student) {
 function selectSort(event) {
   const sortBy = event.target.dataset.sort;
   const sortDir = event.target.dataset.sortDirection;
+
+  if (sortDir === "asc") {
+    event.target.dataset.sortDirection = "desc";
+  } else {
+    event.target.dataset.sortDirection = "asc";
+  }
+  console.log(`User selected ${sortBy} - ${sortDir}`);
+  setSort(sortBy, sortDir);
+}
+
+function setSort(sortBy, sortDir) {
+  settings.sortBy = sortBy;
+  settings.sortDir = sortDir;
+  buildList();
+}
+
+function sortList(sortedList) {
+  let direction = 1;
+  if (settings.sortDir === "desc") {
+    direction = -1;
+  } else {
+    settings.direction = 1;
+  }
+  // Sorts the array with the sortByProperty function
+  sortedList = sortedList.sort(sortByProperty);
+
+  function sortByProperty(studentA, studentB) {
+    if (studentA[settings.sortBy] < studentB[settings.sortBy]) {
+      return -1 * direction;
+    } else {
+      return 1 * direction;
+    }
+  }
+  return sortedList;
 }
 
 function buildList() {
   const currentList = filterList(allStudents);
-  console.log(currentList);
-  displayList(currentList);
+  const sortedList = sortList(currentList);
+  displayList(sortedList);
 }
 
 function cleanStudentNames(newStudent, student) {
@@ -274,11 +306,7 @@ function displayList(student) {
   console.log(student);
   document.querySelector("#list tbody").innerHTML = "";
 
-  if (settings.filterBy !== "all") {
-    student.forEach(displayStudent);
-  } else {
-    allStudents.forEach(displayStudent);
-  }
+  student.forEach(displayStudent);
 }
 
 function displayStudent(student) {
