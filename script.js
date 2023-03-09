@@ -124,6 +124,11 @@ function ravenclaw(student) {
 function gryffindor(student) {
   return student.house === "Gryffindor";
 }
+// Runs the function when you click on the sorting buttons
+function selectSort(event) {
+  const sortBy = event.target.dataset.sort;
+  const sortDir = event.target.dataset.sortDirection;
+}
 
 function buildList() {
   const currentList = filterList(allStudents);
