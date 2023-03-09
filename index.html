@@ -45,7 +45,7 @@
           <div>
             <button id="filter" class="btn">Filtering</button>
             <div class="dropdown hidden" id="dropFilter">
-              <p data-action="filter" data-filter="all_houses">All houses</p>
+              <p data-action="filter" data-filter="all">All houses</p>
               <p data-action="filter" data-filter="slytherin">Slytherin</p>
               <p data-action="filter" data-filter="hufflepuff">Hufflepuff</p>
               <p data-action="filter" data-filter="ravenclaw">Ravenclaw</p>
@@ -86,9 +86,13 @@
       </section>
     </main>
     <div class="process">
-      <div class="start"><p>Start</p></div>
-      <div class="window1"><p>Student list 1996</p></div>
-      <div class="clock"></div>
+      <div class="left">
+        <div class="start"><p>Start</p></div>
+        <div class="window1"><p>Student list 1996</p></div>
+      </div>
+      <div class="time-container">
+        <div class="display-time"></div>
+      </div>
     </div>
     <script src="script.js"></script>
   </body>

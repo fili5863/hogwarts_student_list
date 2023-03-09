@@ -24,13 +24,18 @@ body {
 .process {
   display: flex;
   position: absolute;
+  justify-content: space-between;
   background-color: var(--grey);
   width: calc(100% - 4px);
-  height: 30px;
-  top: calc(100% - 34px);
+  height: 36px;
+  top: calc(100% - 40px);
   border-width: 2px;
   border-color: var(--borderlight) var(--borderdark) var(--borderdark) var(--borderlight);
   border-style: solid;
+}
+
+.left {
+  display: flex;
 }
 
 .start {
@@ -71,6 +76,24 @@ body {
   grid-column: 1;
   font-weight: var(--norm);
   text-align: start;
+}
+
+.time-container {
+  display: flex;
+  justify-content: end;
+  width: 100px;
+  height: 75%;
+  margin: 2px;
+  border-width: 2px;
+  border-color: var(--borderdark) var(--borderlight) var(--borderlight) var(--borderdark);
+  border-style: inset;
+}
+
+.display-time {
+  align-self: center;
+  padding-inline: 5px;
+  font-family: var(--win95);
+  text-align: end;
 }
 
 .window {
