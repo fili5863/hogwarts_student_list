@@ -131,19 +131,42 @@ body {
   text-decoration: none;
   font-size: 16px;
 }
+.active {
+  border-width: 2px;
+  border-color: var(--borderdark) var(--borderlight) var(--borderlight) var(--borderdark);
+  border-style: inset;
+  margin: -2px;
+}
+.btn:active {
+  border-width: 2px;
+  border-color: var(--borderdark) var(--borderlight) var(--borderlight) var(--borderdark);
+  border-style: inset;
+  margin: -2px;
+}
 
 .dropdown {
+  cursor: pointer;
   position: absolute;
   z-index: 3;
   width: 170px;
   display: flex;
   flex-direction: column;
-  color: antiquewhite;
-  background-color: green;
+  background-color: var(--grey);
+  border-width: 2px;
+  margin-top: -2px;
+  border-color: var(--borderlight) var(--borderdark) var(--borderdark) var(--borderlight);
+  border-style: solid;
 }
 
 .dropdown p {
-  padding-inline-start: 15px;
+  font-family: var(--win95);
+  margin: 2px;
+  padding-inline-start: 5px;
+}
+
+.dropdown p:hover {
+  background-color: darkblue;
+  color: whitesmoke;
 }
 
 /* Content */
@@ -166,6 +189,7 @@ tr {
   display: flex;
   width: 200px;
   height: 100px;
+  cursor: pointer;
 }
 
 tbody {
@@ -257,6 +281,7 @@ tbody {
 }
 
 .modalBtn > button {
+  cursor: pointer;
   padding: 15px;
   outline: 1px solid #000;
 }
