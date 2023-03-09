@@ -33,13 +33,15 @@ function start() {
 }
 
 function registerButtons() {
-  document.querySelectorAll(".btn").forEach(button =>
-    button.addEventListener("click", e => {
+  document.querySelectorAll(".btn").forEach((button) =>
+    button.addEventListener("click", (e) => {
       console.log(e.target.id);
       if (e.target.id === "filter") {
         document.getElementById("dropFilter").classList.toggle("hidden");
       } else if (e.target.id === "sort") {
         document.getElementById("dropSort").classList.toggle("hidden");
+      } else if (e.target.id === "expell") {
+        expellStudent();
       }
 
       // document
@@ -47,12 +49,8 @@ function registerButtons() {
       //   .forEach(dropdown => dropdown.classList.toggle("hidden"));
     })
   );
-  document
-    .querySelectorAll("[data-action='filter']")
-    .forEach(option => option.addEventListener("click", selectFilter));
-  document
-    .querySelectorAll("[data-action='sort']")
-    .forEach(option => option.addEventListener("click", selectSort));
+  document.querySelectorAll("[data-action='filter']").forEach((option) => option.addEventListener("click", selectFilter));
+  document.querySelectorAll("[data-action='sort']").forEach((option) => option.addEventListener("click", selectSort));
 }
 
 function selectSort() {
@@ -60,10 +58,7 @@ function selectSort() {
 }
 
 async function fetchData() {
-  let [studentData, bloodData] = await Promise.all([
-    fetch("https://petlatkea.dk/2021/hogwarts/students.json").then(response => response.json()),
-    fetch("https://petlatkea.dk/2021/hogwarts/families.json").then(response => response.json()),
-  ]);
+  let [studentData, bloodData] = await Promise.all([fetch("https://petlatkea.dk/2021/hogwarts/students.json").then((response) => response.json()), fetch("https://petlatkea.dk/2021/hogwarts/families.json").then((response) => response.json())]);
   prepareObject(studentData, bloodData);
   displayList();
   console.log(allStudents);
@@ -72,7 +67,7 @@ async function fetchData() {
 /* Prepare list of students */
 
 function prepareObject(students, bloodData) {
-  students.forEach(student => {
+  students.forEach((student) => {
     const newStudent = Object.create(Student);
     cleanStudentNames(newStudent, student);
     cleanStudentHouse(newStudent, student);
@@ -167,10 +162,7 @@ function cleanStudentBlood(newStudent, student, bloodData) {
 }
 
 function getBlood(newStudent, student, bloodData) {
-  if (
-    bloodData.pure.includes(newStudent.lastName) &&
-    bloodData.half.includes(newStudent.lastName)
-  ) {
+  if (bloodData.pure.includes(newStudent.lastName) && bloodData.half.includes(newStudent.lastName)) {
     return "Pure";
   } else if (bloodData.half.includes(newStudent.lastName)) {
     return "Half";
@@ -181,9 +173,7 @@ function getBlood(newStudent, student, bloodData) {
 
 function getFirstName(student) {
   if (student.fullName === "Leanne") {
-    return `${
-      student.fullName.charAt(0).toUpperCase() + student.fullName.slice(1).toLowerCase().trim()
-    }`;
+    return `${student.fullName.charAt(0).toUpperCase() + student.fullName.slice(1).toLowerCase().trim()}`;
   }
   // Finds the firstname
   let studentFirstname = student.fullName.substring(0, student.fullName.indexOf(" "));
@@ -192,9 +182,7 @@ function getFirstName(student) {
 }
 
 function getMiddleName(student) {
-  let studentMiddlename = student.fullName
-    .substring(student.fullName.indexOf(" "), student.fullName.lastIndexOf(" "))
-    .trim();
+  let studentMiddlename = student.fullName.substring(student.fullName.indexOf(" "), student.fullName.lastIndexOf(" ")).trim();
 
   // If the student doesn't have middlename, return blank
   if (studentMiddlename === "" || studentMiddlename === student.firstName) {
@@ -210,12 +198,7 @@ function getLastName(student) {
   let studentLastname = student.fullName.substring(student.fullName.lastIndexOf(" ") + 1);
 
   if (studentLastname.includes("-")) {
-    return `${
-      studentLastname.charAt(0).toUpperCase() +
-      studentLastname.slice(1, studentLastname.indexOf("-") + 1).toLowerCase() +
-      studentLastname.charAt(studentLastname.indexOf("-") + 1).toUpperCase() +
-      studentLastname.slice(studentLastname.indexOf("-") + 2).toLowerCase()
-    }`;
+    return `${studentLastname.charAt(0).toUpperCase() + studentLastname.slice(1, studentLastname.indexOf("-") + 1).toLowerCase() + studentLastname.charAt(studentLastname.indexOf("-") + 1).toUpperCase() + studentLastname.slice(studentLastname.indexOf("-") + 2).toLowerCase()}`;
   } else if (student.fullName == "Leanne") {
     return `${(studentLastname = "")}`;
   } else {
@@ -230,10 +213,7 @@ function gethouse(student) {
 }
 
 function getNickName(student) {
-  let studentNickname = student.fullName.substring(
-    student.fullName.indexOf(`"`),
-    student.fullName.lastIndexOf(`"`) + 1
-  );
+  let studentNickname = student.fullName.substring(student.fullName.indexOf(`"`), student.fullName.lastIndexOf(`"`) + 1);
   // Removes the quotationmarks
   student.nickName = studentNickname.replaceAll(`"`, ``);
 
@@ -254,17 +234,11 @@ function getImage(newStudent, student) {
   }
   // If the students have the same lastname
   else if (imageLastname.includes("patil")) {
-    return `${(imageSrc.src =
-      "images/" + imageLastname + "_" + newStudent.firstName.toLowerCase() + ".png")}`;
+    return `${(imageSrc.src = "images/" + imageLastname + "_" + newStudent.firstName.toLowerCase() + ".png")}`;
   }
   // If the student has a hyphen in the lastname
   else if (imageLastname.includes("-")) {
-    return `${(imageSrc.src =
-      "images/" +
-      imageLastname.substring(imageLastname.indexOf("-") + 1) +
-      "_" +
-      imageFirstname +
-      ".png")}`;
+    return `${(imageSrc.src = "images/" + imageLastname.substring(imageLastname.indexOf("-") + 1) + "_" + imageFirstname + ".png")}`;
   } else {
     return `${(imageSrc.src = "images/" + imageLastname + "_" + imageFirstname + ".png")}`;
   }
@@ -284,9 +258,7 @@ function displayList(student) {
 function displayStudent(student) {
   // laver en klon af den nye liste via templaten
   const clone = document.querySelector("template#student").content.cloneNode(true);
-  clone
-    .querySelectorAll("tr")
-    .forEach(students => students.addEventListener("click", () => showStudent(student)));
+  clone.querySelectorAll("tr").forEach((students) => students.addEventListener("click", () => showStudent(student)));
   // bestemmer hvad der skal vises
   clone.querySelector("[data-field=firstName]").textContent = student.firstName;
   clone.querySelector("[data-field=middleName]").textContent = student.middleName;
@@ -302,13 +274,9 @@ function showStudent(student) {
   const modal = document.querySelector(".modal");
   document.getElementById("popBtn").addEventListener("click", closeModal);
   if (student.nickName === "") {
-    modal.querySelector(
-      ".name"
-    ).textContent = `${student.firstName} ${student.middleName} ${student.lastName}`;
+    modal.querySelector(".name").textContent = `${student.firstName} ${student.middleName} ${student.lastName}`;
   } else {
-    modal.querySelector(
-      ".name"
-    ).textContent = `${student.firstName} ${student.middleName} "${student.nickName}" ${student.lastName}`;
+    modal.querySelector(".name").textContent = `${student.firstName} ${student.middleName} "${student.nickName}" ${student.lastName}`;
   }
   modal.querySelector(".picture").src = student.image;
   modal.querySelector(".blood").textContent = "Bloodtype: " + student.blood;
@@ -330,16 +298,12 @@ function showTime() {
   let time = new Date();
   displayTime.innerText = `${time.toLocaleTimeString("en-US", { hour12: true })}`;
   setTimeout(showTime, 1000);
-  displayTime.innerText = `${displayTime.innerText.substring(
-    0,
-    displayTime.innerText.lastIndexOf(":")
-  )} ${displayTime.innerText.slice(displayTime.innerText.lastIndexOf(" "))}`;
+  displayTime.innerText = `${displayTime.innerText.substring(0, displayTime.innerText.lastIndexOf(":"))} ${displayTime.innerText.slice(displayTime.innerText.lastIndexOf(" "))}`;
 }
 
 showTime();
 
 //expell
-document.getElementById("expell_modal").addEventListener("click", expellStudent);
 
 function expellStudent() {
   console.log("expell");
