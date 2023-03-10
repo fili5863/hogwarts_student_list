@@ -39,12 +39,22 @@ function registerButtons() {
       console.log(e.target.id);
       if (e.target.id === "filter") {
         document.querySelector(".btn").classList.toggle("active");
+        document.querySelector(".btnSort").classList.remove("active");
         document.getElementById("dropFilter").classList.toggle("hidden");
+        document.getElementById("dropSort").classList.add("hidden");
       } else if (e.target.id === "sort") {
         document.querySelector(".btnSort").classList.toggle("active");
+        document.querySelector(".btn").classList.remove("active");
         document.getElementById("dropSort").classList.toggle("hidden");
+        document.getElementById("dropFilter").classList.add("hidden");
       } else if (e.target.id === "expell") {
+        document.querySelector(".btn").classList.remove("active");
+        document.getElementById("dropFilter").classList.add("hidden");
+        document.getElementById("dropSort").classList.add("hidden");
+        document.querySelector(".btnSort").classList.remove("active");
         showExpelled();
+      } else {
+        clickOutside();
       }
     })
   );
@@ -54,6 +64,9 @@ function registerButtons() {
   document
     .querySelectorAll("[data-action='sort']")
     .forEach(option => option.addEventListener("click", selectSort));
+}
+function clickOutside() {
+  console.log("trigger");
 }
 
 function selectSort() {
@@ -329,11 +342,17 @@ function displayStudent(student) {
     .querySelectorAll("tr")
     .forEach(students => students.addEventListener("click", () => showStudent(student)));
   // bestemmer hvad der skal vises
-  clone.querySelector("[data-field=firstName]").textContent = student.firstName;
-  clone.querySelector("[data-field=middleName]").textContent = student.middleName;
-  clone.querySelector("[data-field=lastName]").textContent = student.lastName;
-  clone.querySelector("[data-field=nickName]").textContent = student.nickName;
+  if (student.nickName === "") {
+    clone.querySelector(
+      "[data-field=name]"
+    ).textContent = `${student.firstName} ${student.middleName} ${student.lastName}`;
+  } else {
+    clone.querySelector(
+      "[data-field=name]"
+    ).textContent = `${student.firstName} ${student.middleName} "${student.nickName}" ${student.lastName}`;
+  }
   clone.querySelector("[data-field=house]").textContent = student.house;
+  clone.querySelector("[data-field=blood]").textContent = student.blood;
 
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
