@@ -4,12 +4,13 @@
 
 let allStudents = [];
 let expelledStudents = [];
+let prefectedStudents = [];
 
 const Student = {
   firstName: "",
   lastName: "",
   middleName: "",
-  nickName: "Null",
+  nickName: "",
   image: "",
   gender: "",
   bloodstatus: "",
@@ -53,8 +54,12 @@ function registerButtons() {
         document.getElementById("dropSort").classList.add("hidden");
         document.querySelector(".btnSort").classList.remove("active");
         showExpelled();
-      } else {
-        clickOutside();
+      } else if (e.target.id === "prefect") {
+        document.querySelector(".btn").classList.remove("active");
+        document.getElementById("dropFilter").classList.add("hidden");
+        document.getElementById("dropSort").classList.add("hidden");
+        document.querySelector(".btnSort").classList.remove("active");
+        showPrefect();
       }
     })
   );
@@ -79,7 +84,6 @@ async function fetchData() {
     fetch("https://petlatkea.dk/2021/hogwarts/families.json").then(response => response.json()),
   ]);
   prepareObject(studentData, bloodData);
-  buildList();
   console.log(allStudents);
 }
 
@@ -92,11 +96,11 @@ function prepareObject(students, bloodData) {
     cleanStudentHouse(newStudent, student);
     cleanStudentImage(newStudent, student);
     cleanStudentBlood(newStudent, student, bloodData);
-    getExpell(newStudent, student);
 
     //    Pushes the studentlist into the array
     allStudents.push(newStudent);
   });
+  displayList(allStudents);
 }
 
 //filter
@@ -127,12 +131,7 @@ function filterList(filteredList) {
   return filteredList;
 }
 
-function allHouses(student) {
-  return student.house === "all";
-}
-
 function slytherin(student) {
-  console.log("Slitherin yo moms");
   return student.house === "Slytherin";
 }
 
@@ -320,12 +319,11 @@ function getImage(newStudent, student) {
   }
 }
 
-function getExpell(student) {
-  student.expelled = false;
-}
-
 function showExpelled() {
   displayList(expelledStudents);
+}
+function showPrefect() {
+  displayList(prefectedStudents);
 }
 
 function displayList(student) {
@@ -338,6 +336,7 @@ function displayList(student) {
 function displayStudent(student) {
   // laver en klon af den nye liste via templaten
   const clone = document.querySelector("template#student").content.cloneNode(true);
+
   clone
     .querySelectorAll("tr")
     .forEach(students => students.addEventListener("click", () => showStudent(student)));
@@ -377,16 +376,94 @@ function showStudent(student) {
   modal.querySelector(".prefectPop").textContent = "Prefect: " + student.prefect;
   modal.querySelector(".inquis").textContent = "Inquisitorial squad: " + student.inquis;
   modal.classList.remove("hidden");
-  document.getElementById("expell_modal").addEventListener("click", () => {
-    console.log("before", student.expelled);
-    student.expelled = true;
-    console.log("after", student.expelled);
-    const index = allStudents.indexOf(student);
-    allStudents.pop(index);
-    expelledStudents.push(student);
-    closeModal();
+
+  if (student.expelled === true) {
+    document.querySelector(".modalBtn").classList.add("hidden");
+    document.querySelector(".expelled").style.color = "red";
+  } else {
+    document.querySelector(".modalBtn").classList.remove("hidden");
+    document.querySelector(".expelled").style.color = "black";
+  }
+
+  if (student.prefect === true) {
+    document.getElementById("prefect_modal").textContent = "Remove prefect";
+  } else {
+    document.getElementById("prefect_modal").textContent = "Add prefect";
+  }
+
+  if (student.inquis === true) {
+    document.getElementById("inqui_modal").textContent = "Remove from Inquisitorial squad";
+  } else {
+    document.getElementById("inqui_modal").textContent = "Add to Inquisitorial squad";
+  }
+
+  /* Expell */
+  document.getElementById("expell_modal").addEventListener("click", clickExpell);
+  function clickExpell() {
+    expellStudent(student);
+  }
+  function expellStudent(student) {
+    if (student.expelled === false) {
+      console.log("before", student.expelled);
+      student.expelled = true;
+      console.log("after", student.expelled);
+      const index = allStudents.indexOf(student);
+      allStudents.splice(index, 1);
+      expelledStudents.push(student);
+    }
+    showStudent(student);
+
+    setTimeout(closeModal, 2000);
     buildList();
-  });
+  }
+
+  /* Prefect */
+  document.getElementById("prefect_modal").addEventListener("click", clickPrefect);
+  function clickPrefect() {
+    tryToMakePrefect(student);
+  }
+  function tryToMakePrefect(selectedStudent) {
+    const prefects = allStudents.filter(student => student.prefect);
+    const housePrefects = prefects.filter(student => student.house === selectedStudent.house);
+    const numberOfPrefects = housePrefects.length;
+
+    if (student.prefect !== true && numberOfPrefects < 2) {
+      student.prefect = true;
+      prefectedStudents.push(student);
+    } else if (student.prefect === true) {
+      student.prefect = false;
+      const prefectIndex = prefectedStudents.indexOf(student);
+      prefectedStudents.splice(prefectIndex, 1);
+    } else {
+      dontMakePrefect();
+    }
+    showStudent(student);
+    buildList();
+    console.log(prefectedStudents);
+  }
+  function dontMakePrefect() {
+    alert("You can't have more than two prefects from each house");
+  }
+
+  /* Inquisitorial squad */
+  document.getElementById("inqui_modal").addEventListener("click", clickInqui);
+
+  function clickInqui() {
+    tryToMakeInqui(student);
+  }
+  function tryToMakeInqui(selectedStudent) {
+    const inquiss = allStudents.filter(student => student.inquis);
+    const bloodInquis = inquiss.filter(student => student.blood === selectedStudent.blood);
+
+    if (student.blood === "pure" || student.house === "Slytherin") {
+      student.inquis = true;
+    } else {
+      alert("The student has to be either pure blood or be a member of the Slytherin house");
+    }
+    buildList();
+    closeModal(student);
+    showStudent(student);
+  }
 }
 
 function closeModal() {
@@ -407,5 +484,3 @@ function showTime() {
 }
 
 showTime();
-
-//expell
