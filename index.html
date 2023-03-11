@@ -11,7 +11,7 @@
   <body>
     <main class="window">
       <section id="popup" class="modal hidden">
-        <div class="topbar">
+        <div class="topbar modaltopbar">
           <div>
             <span>Student list 1991</span>
           </div>
@@ -22,10 +22,10 @@
           <img src="" alt="" class="picture" />
           <h3 class="name"></h3>
           <p class="blood"></p>
-          <p data-field="expelled" class="expelled"></p>
+
           <p class="prefectPop"></p>
           <p class="inquis"></p>
-          <img src="" alt="" class="house" />
+          <img src="" alt="" class="housePic" />
         </article>
         <div class="modalBtn">
           <button id="prefect_modal">Add prefect</button>
@@ -33,8 +33,22 @@
           <button id="expell_modal">Expell</button>
         </div>
       </section>
-      <section class="contentouter">
+      <section id="alert" class="alertmsg hidden">
         <div class="topbar">
+          <div>
+            <span>Warning</span>
+          </div>
+          <button id="alertBtn" class="alertBtn">X</button>
+        </div>
+
+        <div class="alertcontent">
+          <img src="images/expelled.png" alt="" />
+          <p>This student has been expelled!</p>
+        </div>
+        <button id="alertBtn1" class="alertBtn">OK</button>
+      </section>
+      <section class="contentouter">
+        <div class="topbar windowtopbar">
           <div>
             <div class="windowIcon">O</div>
             <span>Student list 1991</span>
@@ -67,9 +81,8 @@
             <button class="btn" id="expell">Expelled</button>
           </div>
         </section>
+        <img class="logo" src="images/studentlistLogo.png" alt="" />
         <div class="contentinner">
-          <h1>Students</h1>
-
           <table id="list">
             <tbody></tbody>
           </table>
@@ -77,10 +90,13 @@
             <tr>
               <td data-field="name">FIRSTNAME</td>
               <td data-field="blood">BLOODTYPE</td>
-              <td data-field="house">HOUSE</td>
+              <td data-field="house">
+                <img class="house" src="" alt="" />
+              </td>
             </tr>
           </template>
         </div>
+        <div class="contentbot">student</div>
       </section>
     </main>
     <div class="process">

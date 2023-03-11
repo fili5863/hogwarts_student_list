@@ -328,6 +328,7 @@ function showPrefect() {
 
 function displayList(student) {
   console.log(student);
+  showStudentAmount(student);
   document.querySelector("#list tbody").innerHTML = "";
 
   student.forEach(displayStudent);
@@ -350,7 +351,13 @@ function displayStudent(student) {
       "[data-field=name]"
     ).textContent = `${student.firstName} ${student.middleName} "${student.nickName}" ${student.lastName}`;
   }
-  clone.querySelector("[data-field=house]").textContent = student.house;
+  clone.querySelector("[data-field=house]").innerHTML =
+    "<img class='house' src='" +
+    "images/" +
+    `${student.house.toLowerCase()}` +
+    ".png" +
+    "' alt='' />";
+  "images/" + `${student.house.toLowerCase()}` + ".png";
   clone.querySelector("[data-field=blood]").textContent = student.blood;
 
   // append clone to list
@@ -360,7 +367,7 @@ function displayStudent(student) {
 function showStudent(student) {
   const modal = document.querySelector(".modal");
   document.getElementById("popBtn").addEventListener("click", closeModal);
-
+  document.querySelector(".windowtopbar").classList.add("behind");
   if (student.nickName === "") {
     modal.querySelector(
       ".name"
@@ -372,17 +379,15 @@ function showStudent(student) {
   }
   modal.querySelector(".picture").src = student.image;
   modal.querySelector(".blood").textContent = "Bloodtype: " + student.blood;
-  modal.querySelector(".expelled").textContent = "Expelled: " + student.expelled;
   modal.querySelector(".prefectPop").textContent = "Prefect: " + student.prefect;
   modal.querySelector(".inquis").textContent = "Inquisitorial squad: " + student.inquis;
+  modal.querySelector(".housePic").src = "images/" + `${student.house.toLowerCase()}` + ".png";
   modal.classList.remove("hidden");
 
   if (student.expelled === true) {
     document.querySelector(".modalBtn").classList.add("hidden");
-    document.querySelector(".expelled").style.color = "red";
   } else {
     document.querySelector(".modalBtn").classList.remove("hidden");
-    document.querySelector(".expelled").style.color = "black";
   }
 
   if (student.prefect === true) {
@@ -412,9 +417,15 @@ function showStudent(student) {
       expelledStudents.push(student);
     }
     showStudent(student);
-
-    setTimeout(closeModal, 2000);
+    showAlert();
     buildList();
+  }
+
+  function showAlert() {
+    document.getElementById("alertBtn1").addEventListener("click", closeAlert);
+    document.getElementById("alertBtn").addEventListener("click", closeAlert);
+    document.getElementById("alert").classList.remove("hidden");
+    document.querySelector(".modaltopbar").classList.add("behind");
   }
 
   /* Prefect */
@@ -468,6 +479,13 @@ function showStudent(student) {
 
 function closeModal() {
   document.querySelector(".modal").classList.add("hidden");
+  document.querySelector(".windowtopbar").classList.remove("behind");
+}
+function closeAlert() {
+  console.log("click");
+  document.getElementById("alert").classList.add("hidden");
+  document.querySelector(".modaltopbar").classList.remove("behind");
+  closeModal();
 }
 
 /* Time */
@@ -482,5 +500,9 @@ function showTime() {
     displayTime.innerText.lastIndexOf(":")
   )} ${displayTime.innerText.slice(displayTime.innerText.lastIndexOf(" "))}`;
 }
-
 showTime();
+/* Show amount of students */
+function showStudentAmount(student) {
+  console.log(student.length);
+  document.querySelector(".contentbot").innerText = `${student.length}` + " Student(s)";
+}
