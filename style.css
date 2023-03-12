@@ -54,9 +54,13 @@ body {
   border-style: solid;
 }
 
+.start > img {
+  height: 25px;
+}
+
 .window1 {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr;
   background-color: var(--grey);
   width: 200px;
   height: 75%;
@@ -76,9 +80,13 @@ body {
 }
 
 .window1 > p {
-  grid-column: 1;
+  grid-column: 2;
   font-weight: var(--norm);
   text-align: start;
+}
+
+.window1 > img {
+  height: 25px;
 }
 
 .time-container {
@@ -116,7 +124,10 @@ body {
   border-style: solid;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.43);
 }
-
+.windowIcon > img {
+  height: 22px;
+  align-self: center;
+}
 /* Buttons */
 .allbuttons {
   display: flex;

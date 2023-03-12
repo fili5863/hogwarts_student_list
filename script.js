@@ -564,7 +564,6 @@ function showStudent(student) {
   function tryToMakeInqui(selectedStudent) {
     document.getElementById("inqui_modal").removeEventListener("click", clickInqui);
     const inquiss = allStudents.filter(student => student.inquis);
-    const bloodInquis = inquiss.filter(student => student.blood === selectedStudent.blood);
 
     if (student.inquis === false) {
       if (student.blood === "pure" || student.house === "Slytherin") {
@@ -587,17 +586,18 @@ function showStudent(student) {
 
     buildList();
   }
-}
+  function closeModal() {
+    document.getElementById("expell_modal").removeEventListener("click", clickExpell);
+    document.querySelector(".modal").classList.add("hidden");
+    document.querySelector(".windowtopbar").classList.remove("behind");
+  }
+  function closeAlert() {
+    console.log("click");
+    document.getElementById("alert").classList.add("hidden");
+    document.querySelector(".modaltopbar").classList.remove("behind");
 
-function closeModal() {
-  document.querySelector(".modal").classList.add("hidden");
-  document.querySelector(".windowtopbar").classList.remove("behind");
-}
-function closeAlert() {
-  console.log("click");
-  document.getElementById("alert").classList.add("hidden");
-  document.querySelector(".modaltopbar").classList.remove("behind");
-  closeModal();
+    closeModal();
+  }
 }
 
 function hacked() {
