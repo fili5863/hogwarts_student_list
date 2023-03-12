@@ -9,6 +9,18 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <section id="hacked" class="hack">
+      <img class="iconimg" src="images/hack.png" alt="" />
+      <p>hack.EXE</p>
+    </section>
+    <section class="trash">
+      <img class="iconimg" src="images/recycle.png" alt="" />
+      <p>Trash</p>
+    </section>
+    <section class="studentlist">
+      <img class="iconimg" src="images/studentlisticon.png" alt="" />
+      <p>Student list 1991</p>
+    </section>
     <main class="window">
       <section id="popup" class="modal hidden">
         <div class="topbar modaltopbar">
@@ -22,7 +34,6 @@
           <img src="" alt="" class="picture" />
           <h3 class="name"></h3>
           <p class="blood"></p>
-
           <p class="prefectPop"></p>
           <p class="inquis"></p>
           <img src="" alt="" class="housePic" />
@@ -69,8 +80,8 @@
           <div>
             <button id="sort" class="btn btnSort">Sorting</button>
             <div class="dropdown hidden" id="dropSort">
-              <p data-action="sort" data-sort-direction="asc" data-sort="firstname">Firstname</p>
-              <p data-action="sort" data-sort-direction="asc" data-sort="lastname">Lastname</p>
+              <p data-action="sort" data-sort-direction="asc" data-sort="firstName">Firstname</p>
+              <p data-action="sort" data-sort-direction="asc" data-sort="lastName">Lastname</p>
               <p data-action="sort" data-sort-direction="asc" data-sort="house">House</p>
             </div>
           </div>
@@ -90,6 +101,9 @@
             <tr>
               <td data-field="name">FIRSTNAME</td>
               <td data-field="blood">BLOODTYPE</td>
+              <td data-field="inquis">
+                <img class="inquis" src="" alt="" />
+              </td>
               <td data-field="house">
                 <img class="house" src="" alt="" />
               </td>

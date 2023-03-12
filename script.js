@@ -5,6 +5,19 @@
 let allStudents = [];
 let expelledStudents = [];
 let prefectedStudents = [];
+let systemHacked = false;
+
+const hackgrid = {
+  firstName: "",
+  lastName: "",
+  middleName: "",
+  nickName: "Hackgrid",
+  image: "images/hackgrid.jpg",
+  house: "Gryffindor",
+  blood: "Pure",
+  prefect: false,
+  expelled: false,
+};
 
 const Student = {
   firstName: "",
@@ -22,7 +35,7 @@ const Student = {
 
 const settings = {
   filterBy: "all",
-  sortBy: "name",
+  sortBy: "firstName",
   sortDir: "asc",
 };
 
@@ -70,13 +83,6 @@ function registerButtons() {
     .querySelectorAll("[data-action='sort']")
     .forEach(option => option.addEventListener("click", selectSort));
 }
-function clickOutside() {
-  console.log("trigger");
-}
-
-function selectSort() {
-  console.log("sort");
-}
 
 async function fetchData() {
   let [studentData, bloodData] = await Promise.all([
@@ -100,7 +106,9 @@ function prepareObject(students, bloodData) {
     //    Pushes the studentlist into the array
     allStudents.push(newStudent);
   });
+
   displayList(allStudents);
+  buildList();
 }
 
 //filter
@@ -172,7 +180,7 @@ function sortList(sortedList) {
   if (settings.sortDir === "desc") {
     direction = -1;
   } else {
-    settings.direction = 1;
+    direction = 1;
   }
   // Sorts the array with the sortByProperty function
   sortedList = sortedList.sort(sortByProperty);
@@ -330,7 +338,6 @@ function displayList(student) {
   console.log(student);
   showStudentAmount(student);
   document.querySelector("#list tbody").innerHTML = "";
-
   student.forEach(displayStudent);
 }
 
@@ -358,8 +365,12 @@ function displayStudent(student) {
     ".png" +
     "' alt='' />";
   "images/" + `${student.house.toLowerCase()}` + ".png";
-  clone.querySelector("[data-field=blood]").textContent = student.blood;
-
+  clone.querySelector("[data-field=blood]").innerHTML =
+    "<img class='bloodimg' src='" + "images/" + `${student.blood}` + ".png" + "' alt='' />";
+  if (student.inquis === true) {
+    clone.querySelector("[data-field=inquis]").innerHTML =
+      "<img class='inquis' src='images/inquis.png' alt='' />";
+  }
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
 }
@@ -448,8 +459,8 @@ function showStudent(student) {
     } else {
       dontMakePrefect();
     }
-    showStudent(student);
     buildList();
+    showStudent(student);
     console.log(prefectedStudents);
   }
   function dontMakePrefect() {
@@ -466,14 +477,18 @@ function showStudent(student) {
     const inquiss = allStudents.filter(student => student.inquis);
     const bloodInquis = inquiss.filter(student => student.blood === selectedStudent.blood);
 
-    if (student.blood === "pure" || student.house === "Slytherin") {
-      student.inquis = true;
+    if (student.inquis === false) {
+      if (student.blood === "pure" || student.house === "Slytherin") {
+        student.inquis = true;
+      } else {
+        alert("The student has to be either pure blood or be a member of the Slytherin house");
+      }
     } else {
-      alert("The student has to be either pure blood or be a member of the Slytherin house");
+      student.inquis = false;
     }
-    buildList();
-    closeModal(student);
+
     showStudent(student);
+    buildList();
   }
 }
 
